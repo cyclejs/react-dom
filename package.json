@@ -19,7 +19,7 @@
   "typings": "lib/cjs/index.d.ts",
   "types": "lib/cjs/index.d.ts",
   "dependencies": {
-    "@cycle/react": "1.x.x",
+    "@cycle/react": "1.1.x",
     "react": "16.4.x",
     "react-dom": "16.4.x",
     "xstream": "11.x.x"
@@ -49,7 +49,6 @@
     "compile": "npm run compile-cjs && npm run compile-es6",
     "compile-cjs": "tsc --module commonjs --outDir ./lib/cjs",
     "compile-es6": "echo 'TODO' : tsc --module es6 --outDir ./lib/es6",
-    "test-browser": "karma start karma.config.js",
-    "test": "$(npm bin)/mocha test/*.ts --require ts-node/register --recursive"
+    "test": "karma start karma.config.js"
   }
 }
