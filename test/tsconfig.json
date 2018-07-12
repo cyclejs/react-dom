@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "target": "ES2015",
+    "rootDir": "./",
+    "outDir": "test/out",
+    "skipLibCheck": true,
+    "lib": ["dom", "es5", "scripthost", "es2015"]
+  },
+  "files": ["../src/index.ts", "render.ts", "hyperscript-helpers.ts"]
+}
