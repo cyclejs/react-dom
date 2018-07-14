@@ -2,8 +2,11 @@ import {h} from '@cycle/react';
 import {ReactElement} from 'react';
 
 function parseShortcut(param: any) {
+  if (typeof param === 'symbol') {
+    return {id: undefined, className: undefined, sel: param};
+  }
   if (typeof param !== 'string' || param.length === 0) {
-    return {id: undefined, className: undefined, selector: undefined};
+    return {id: undefined, className: undefined, sel: undefined};
   }
   const parts = (param as string)
     .split(/(?=[\#\.])/g)
@@ -13,8 +16,8 @@ function parseShortcut(param: any) {
   const removeFirstChar = part => part.slice(1);
   const id = possiblyIds.map(removeFirstChar).find(() => true);
   const className = possiblyClasses.map(removeFirstChar).join(' ');
-  const selector = parts.find(part => part[0] !== '#' && part[0] !== '.');
-  return {id, className, selector};
+  const sel = parts.find(part => part[0] !== '#' && part[0] !== '.');
+  return {id, className, sel};
 }
 
 function createTagFunction(tagName: string): Function {
@@ -23,28 +26,30 @@ function createTagFunction(tagName: string): Function {
     const hasB = typeof b !== 'undefined';
     const hasBChildren = Array.isArray(b) || typeof b === 'string';
     const hasC = typeof c !== 'undefined';
-    const {id, className, selector} = parseShortcut(a);
+    const {id, className, sel} = parseShortcut(a);
     const hasId = !!id;
     const hasClassName = !!className;
-    const hasSelector = !!selector;
+    const hasSelector = !!sel;
     if (hasId || hasClassName) {
       if (hasB && hasC) {
-        return h(tagName, {...b, id, className, selector}, c);
+        return h(tagName, {...b, id, className, sel}, c);
       } else if (hasB && hasBChildren) {
-        return h(tagName, {id, className, selector}, b);
+        return h(tagName, {id, className, sel}, b);
       } else if (hasB) {
-        return h(tagName, {...b, id, className, selector});
+        return h(tagName, {...b, id, className, sel});
       } else {
-        return h(tagName, {id, className, selector});
+        return h(tagName, {id, className, sel});
       }
     } else if (hasC) {
-      return h(tagName, {selector: a, ...b}, c);
+      return h(tagName, {sel: a, ...b}, c);
     } else if (hasB && hasSelector && hasBChildren) {
-      return h(tagName, {selector}, b);
+      return h(tagName, {sel}, b);
     } else if (hasB && hasSelector) {
-      return h(tagName, {selector, ...b});
+      return h(tagName, {sel, ...b});
     } else if (hasB) {
       return h(tagName, a, b);
+    } else if (hasA && typeof sel === 'symbol') {
+      return h(tagName, {sel});
     } else if (hasA) {
       return h(tagName, a);
     } else {

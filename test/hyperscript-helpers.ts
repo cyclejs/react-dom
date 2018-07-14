@@ -240,7 +240,65 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector shortcut and empty props', done => {
+  it('w/ symbol selector shortcut', done => {
+    function main(sources: {react: ReactSource}) {
+      const inc = Symbol();
+      const inc$ = sources.react.select(inc).events('click');
+      const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
+      const vdom$ = count$.map((i: number) => div([h1('' + i), button(inc)]));
+      return {react: vdom$};
+    }
+
+    const target = createRenderTarget();
+    run(main, {
+      react: makeDOMDriver(target),
+    });
+
+    setTimeout(() => {
+      const button = target.querySelector('button') as HTMLElement;
+      const h1 = target.querySelector('h1') as HTMLElement;
+      assert.strictEqual(!!button, true);
+      assert.strictEqual(!!h1, true);
+      assert.strictEqual(h1.innerHTML, '0');
+      button.click();
+      setTimeout(() => {
+        assert.strictEqual(h1.innerHTML, '1');
+        done();
+      }, 100);
+    }, 100);
+  });
+
+  it('w/ symbol selector shortcut and empty props', done => {
+    function main(sources: {react: ReactSource}) {
+      const inc = Symbol();
+      const inc$ = sources.react.select(inc).events('click');
+      const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
+      const vdom$ = count$.map((i: number) =>
+        div([h1('' + i), button(inc, {})]),
+      );
+      return {react: vdom$};
+    }
+
+    const target = createRenderTarget();
+    run(main, {
+      react: makeDOMDriver(target),
+    });
+
+    setTimeout(() => {
+      const button = target.querySelector('button') as HTMLElement;
+      const h1 = target.querySelector('h1') as HTMLElement;
+      assert.strictEqual(!!button, true);
+      assert.strictEqual(!!h1, true);
+      assert.strictEqual(h1.innerHTML, '0');
+      button.click();
+      setTimeout(() => {
+        assert.strictEqual(h1.innerHTML, '1');
+        done();
+      }, 100);
+    }, 100);
+  });
+
+  it('w/ string sel shortcut and empty props', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
@@ -269,7 +327,7 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector shortcut and child text', done => {
+  it('w/ string sel shortcut and child text', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
@@ -298,7 +356,7 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector shortcut and children array', done => {
+  it('w/ string sel shortcut and children array', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
@@ -327,7 +385,7 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector shortcut and props and children array', done => {
+  it('w/ string sel shortcut and props and children array', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
@@ -360,7 +418,7 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector + class shortcut and props', done => {
+  it('w/ string sel + class shortcut and props', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
@@ -391,7 +449,7 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector + class shortcut and children array', done => {
+  it('w/ string sel + class shortcut and children array', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);
@@ -422,7 +480,7 @@ describe('hyperscript helpers', function() {
     }, 100);
   });
 
-  it('w/ selector + class shortcut and props and children array', done => {
+  it('w/ str sel + class shortcut and props and children array', done => {
     function main(sources: {react: ReactSource}) {
       const inc$ = sources.react.select('inc').events('click');
       const count$ = inc$.fold((acc: number, x: any) => acc + 1, 0);

@@ -46,7 +46,7 @@ describe('rendering', function() {
       const vdom$ = count$.map((i: number) =>
         h('div', {}, [
           h('h1', {}, '' + i),
-          h('button', {selector: 'inc'}, 'increment'),
+          h('button', {sel: 'inc'}, 'increment'),
         ]),
       );
       return {react: vdom$};
