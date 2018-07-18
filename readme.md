@@ -5,6 +5,10 @@
 - Provides a driver factory `makeDOMDriver`
 - Contains hyperscript helper functions, like in Cycle DOM
 
+```
+npm install @cycle/react-dom
+```
+
 ## Example
 
 ```js
