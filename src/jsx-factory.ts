@@ -1,4 +1,4 @@
-import { createElement, Attributes, ReactElement, ReactType } from 'react';
+import { createElement, ReactElement, ReactType } from 'react';
 import { incorporate } from '@cycle/react';
 export { Attributes } from 'react';
 
