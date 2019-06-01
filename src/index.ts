@@ -116,4 +116,4 @@ export const u: HyperScriptHelperFn = hh.u;
 export const ul: HyperScriptHelperFn = hh.ul;
 export const video: HyperScriptHelperFn = hh.video;
 
-export { default as JsxFactory } from './jsx-factory';
+export { default as jsxFactory } from './jsx-factory';

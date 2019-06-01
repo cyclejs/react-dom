@@ -88,7 +88,7 @@ module: {
       loader: 'babel-loader',
       options: {
         plugins: [
-          ['transform-react-jsx', { pragma: JsxFactory.createElement' }],
+          ['transform-react-jsx', { pragma: jsxFactory.createElement' }],
         ]
       }
     }
@@ -98,14 +98,14 @@ module: {
 
 If you used `create-cycle-app` you may have to eject to modify the config.
 
-### Automatically providing JsxFactory
+### Automatically providing jsxFactory
 
-You can avoid having to import `JsxFactory` in every jsx file by allowing webpack to provide it:
+You can avoid having to import `jsxFactory` in every jsx file by allowing webpack to provide it:
 
 ```js
 plugins: [
   new webpack.ProvidePlugin({
-    JsxFactory: ['react-dom', JsxFactory]
+    jsxFactory: ['react-dom', jsxFactory]
   })
 ],
 ```
@@ -118,22 +118,22 @@ Add the following to your `tsconfig.json`:
 {
   "compilerOptions": {
     "jsx": "react",
-    "jsxFactory": "JsxFactory.createElement"
+    "jsxFactory": "jsxFactory.createElement"
   }
 }
 ```
 
-If webpack is providing `JsxFactory` you will need to add typings to `custom-typings.d.ts`:
+If webpack is providing `jsxFactory` you will need to add typings to `custom-typings.d.ts`:
 
 ```js
-declare var JsxFactory: any;
+declare var jsxFactory: any;
 ```
 
 
 ## Usage
 
 ```js
-import { JsxFactory } from '@cycle/react-dom';
+import { jsxFactory } from '@cycle/react-dom';
 
 function view(state$: Stream<State>): Stream<ReactElement> {
     return state$.map(({ count }) => (

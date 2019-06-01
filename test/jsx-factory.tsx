@@ -1,7 +1,7 @@
 import { createElement, Attributes, ReactElement, ReactType } from 'react';
 const assert = require('assert');
 import {ReactSource} from '@cycle/react';
-import {makeDOMDriver, JsxFactory} from '../src/index';
+import {makeDOMDriver, jsxFactory} from '../src/index';
 import {run} from '@cycle/run';
 import xs  from 'xstream';
 
