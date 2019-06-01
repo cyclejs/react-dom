@@ -105,7 +105,7 @@ You can avoid having to import `jsxFactory` in every jsx file by allowing webpac
 ```js
 plugins: [
   new webpack.ProvidePlugin({
-    jsxFactory: ['react-dom', jsxFactory]
+    jsxFactory: ['react-dom', 'jsxFactory']
   })
 ],
 ```
