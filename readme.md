@@ -74,6 +74,89 @@ There are also shortcuts for (MVI) intent selectors:
 - `div('inc', props, [child1])` becomes `h('div', {sel: 'inc'}, [child1])`
 - etc
 
+## JSX
+
+### Babel
+
+Add the following to your webpack config:
+
+```js
+module: {
+  rules: [
+    {
+      test: /\.jsx?$/,
+      loader: 'babel-loader',
+      options: {
+        plugins: [
+          ['transform-react-jsx', { pragma: 'jsxFactory.createElement' }],
+        ]
+      }
+    }
+  ]
+},
+```
+
+If you used `create-cycle-app` you may have to eject to modify the config.
+
+### Automatically providing jsxFactory
+
+You can avoid having to import `jsxFactory` in every jsx file by allowing webpack to provide it:
+
+```js
+plugins: [
+  new webpack.ProvidePlugin({
+    jsxFactory: ['react-dom', 'jsxFactory']
+  })
+],
+```
+
+### Typescript
+
+Add the following to your `tsconfig.json`:
+
+```js
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "jsxFactory.createElement"
+  }
+}
+```
+
+If webpack is providing `jsxFactory` you will need to add typings to `custom-typings.d.ts`:
+
+```js
+declare var jsxFactory: any;
+```
+
+
+## Usage
+
+```js
+import { jsxFactory } from '@cycle/react-dom';
+
+function view(state$: Stream<State>): Stream<ReactElement> {
+    return state$.map(({ count }) => (
+        <div>
+            <h2>Counter: {count}</h2>
+            <button sel="add">Add</button>
+            <button sel="subtract">Subtract</button>
+        </div>
+    ));
+}
+```
+
+## Notes
+
+Please ensure you are depending on compatible versions of `@cycle/react` and `@cycle/react-dom`. They should both be at least version `2.1.x`.
+
+```
+yarn list @cycle/react
+```
+
+should return a single result.
+
+
 ## License
 
 MIT, Andre 'Staltz' Medeiros 2018
