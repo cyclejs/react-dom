@@ -88,7 +88,7 @@ module: {
       loader: 'babel-loader',
       options: {
         plugins: [
-          ['transform-react-jsx', { pragma: jsxFactory.createElement' }],
+          ['transform-react-jsx', { pragma: 'jsxFactory.createElement' }],
         ]
       }
     }
